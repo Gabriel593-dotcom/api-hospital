@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import hospital.entities.DTO.MedicoDTO;
+
 @Entity
 public class Medico extends Pessoa {
 	private static final long serialVersionUID = 1L;

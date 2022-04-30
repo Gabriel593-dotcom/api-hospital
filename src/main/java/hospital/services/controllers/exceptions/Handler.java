@@ -30,7 +30,7 @@ public class Handler {
 			hospital.services.exceptions.CpfValidationException cpfIsNotValid) {
 
 		String error = "Cpf inválido.";
-		HttpStatus status = HttpStatus.NOT_FOUND;
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 		return handlerBuilder(error, status, cpfIsNotValid, request);
 	}
 }

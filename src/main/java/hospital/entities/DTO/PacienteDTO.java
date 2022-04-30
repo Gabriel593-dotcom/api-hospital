@@ -1,15 +1,17 @@
 package hospital.entities.DTO;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import hospital.entities.Paciente;
-import hospital.entities.Pessoa;
 import hospital.entities.Telefone;
 
-public class PacienteDTO extends Pessoa {
+public class PacienteDTO implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 
+	private String nome;
 	private String convenio;
 	private Set<Telefone> telefones = new HashSet<>();
 
@@ -17,9 +19,17 @@ public class PacienteDTO extends Pessoa {
 	}
 
 	public PacienteDTO(Paciente paciente) {
-		super(paciente.getId(), paciente.getNome(), paciente.getCpf());
+		this.nome = paciente.getNome();
 		this.convenio = paciente.getConvenio();
 		this.telefones = paciente.getTelefones();
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getConvenio() {

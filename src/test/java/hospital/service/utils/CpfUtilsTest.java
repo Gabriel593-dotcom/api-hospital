@@ -11,7 +11,6 @@ public class CpfUtilsTest {
 	@Test
 	@DisplayName("deve validar cpf informado")
 	public void verificaSeCpfEValido() {
-
 		Assertions.assertTrue(CpfUtils.validaCpf("38051291069"));
 	}
 
@@ -23,8 +22,14 @@ public class CpfUtilsTest {
 
 	@Test
 	@DisplayName("NÃO deve validar cpf informado por sequencia incongruente")
-	public void verificaSeCpfEInvalidoIngongruencia() {
+	public void verificaSeCpfEInvalidoIngongruencia() {	
 		Assertions.assertFalse(CpfUtils.validaCpf("12435690914"));
+	}
+	
+	@Test
+	@DisplayName("NÃO deve validar cpf por ser composto de uma sequencia de apenas um número")
+	public void verificaSeCpfEInvalidoPorSequenciaDeUmNumeroApenas() {
+		Assertions.assertFalse(CpfUtils.validaCpf("11111111111"));
 	}
 
 }

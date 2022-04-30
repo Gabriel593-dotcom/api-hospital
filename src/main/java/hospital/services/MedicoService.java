@@ -10,8 +10,11 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import hospital.entities.Medico;
+import hospital.entities.DTO.MedicoDTO;
 import hospital.entities.repositories.MedicoRepository;
+import hospital.services.exceptions.CpfValidationException;
 import hospital.services.exceptions.ObjectNotFoundException;
+import hospital.services.utils.CpfUtils;
 
 @Service
 public class MedicoService {
@@ -33,4 +36,18 @@ public class MedicoService {
 		PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(direction), orderBy);
 		return medicoRepository.findAll(pageRequest);
 	}
+	
+	public void insert(Medico obj) {
+		String cpf = obj.getCpf();
+		if(CpfUtils.validaCpf(cpf)) {
+			medicoRepository.save(obj);
+		} else {
+			throw new CpfValidationException("O cpf informado não é válido.");
+		}
+	}
+	
+//	public Medico fromDTO(MedicoDTO objDTO) {
+//		return new Medico(objDTO);
+//	}
 }
+
