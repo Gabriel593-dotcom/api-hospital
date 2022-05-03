@@ -26,7 +26,6 @@ public class Consulta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date dataConsulta;
-	private String horario;
 
 	@JsonIgnore
 	@ManyToOne
@@ -45,10 +44,9 @@ public class Consulta implements Serializable {
 	public Consulta() {
 	}
 
-	public Consulta(Integer id, Date dataConsulta, String horario, Medico medico, Paciente paciente) {
+	public Consulta(Integer id, Date dataConsulta, Medico medico, Paciente paciente) {
 		this.id = id;
 		this.dataConsulta = dataConsulta;
-		this.horario = horario;
 		this.medico = medico;
 		this.paciente = paciente;
 	}
@@ -67,14 +65,6 @@ public class Consulta implements Serializable {
 
 	public void setDataConsulta(Date dataConsulta) {
 		this.dataConsulta = dataConsulta;
-	}
-
-	public String getHorario() {
-		return horario;
-	}
-
-	public void setHorario(String horario) {
-		this.horario = horario;
 	}
 
 	public Medico getMedico() {

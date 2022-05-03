@@ -1,7 +1,6 @@
 package hospital.test;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +17,7 @@ import hospital.entities.repositories.ExameRepository;
 import hospital.entities.repositories.MedicoRepository;
 import hospital.entities.repositories.PacienteRepository;
 import hospital.entities.repositories.TelefoneRepository;
+import hospital.services.utils.Utils;
 
 @Configuration
 @Profile("dev")
@@ -44,19 +44,19 @@ public class TestDb implements CommandLineRunner {
 		Paciente paciente2 = new Paciente(null, "Ana Cláudia", "08340178067", "Sompo");
 
 		Medico medico1 = new Medico(null, "Odair", "04629227075", "Ortopedista");
-		Medico medico2 = new Medico(null, "Otávio Nogueira", "15221616009", "Oncologista");
-		Medico medico3 = new Medico(null, "Robério Alencar", "53546273036", "Pediatra");
+//		Medico medico2 = new Medico(null, "Otávio Nogueira", "15221616009", "Oncologista");
+//		Medico medico3 = new Medico(null, "Robério Alencar", "53546273036", "Pediatra");
 
 		pacienteRepository.saveAll(Arrays.asList(paciente1, paciente2));
-		medicoRepository.saveAll(Arrays.asList(medico1, medico2, medico3));
+		medicoRepository.saveAll(Arrays.asList(medico1));
 
 		Telefone tel1 = new Telefone(null, 11, "971276935", null, paciente1);
 		Telefone tel2 = new Telefone(null, 11, "910855265", medico1, null);
 
 		telefoneRepository.saveAll(Arrays.asList(tel1, tel2));
-
-		Consulta consulta1 = new Consulta(null, new Date(), "10:20", medico1, paciente2);
-		Consulta consulta2 = new Consulta(null, new Date(), "12:20", medico1, paciente1);
+		
+		Consulta consulta1 = new Consulta(null, Utils.montaData("22/10/2022 10:05"), medico1, paciente2);
+		Consulta consulta2 = new Consulta(null, Utils.montaData("22/10/2022 12:30"), medico1, paciente1);
 
 		consultaRepository.saveAll(Arrays.asList(consulta1, consulta2));
 		

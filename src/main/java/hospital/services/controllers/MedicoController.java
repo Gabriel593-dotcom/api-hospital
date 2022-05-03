@@ -1,6 +1,5 @@
 package hospital.services.controllers;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import hospital.entities.Medico;
 import hospital.entities.DTO.MedicoDTO;
+import hospital.entities.DTO.RespostaDTO;
 import hospital.services.MedicoService;
 
 @RestController
@@ -52,9 +51,8 @@ public class MedicoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<MedicoDTO> insert(@RequestBody Medico obj){
-		medicoService.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public ResponseEntity<RespostaDTO> insert(@RequestBody Medico obj){
+		RespostaDTO resposta = medicoService.insert(obj);
+		return ResponseEntity.ok().body(resposta);
 	} 
 }

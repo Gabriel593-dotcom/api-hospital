@@ -33,4 +33,22 @@ public class Handler {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		return handlerBuilder(error, status, cpfIsNotValid, request);
 	}
+	
+	@org.springframework.web.bind.annotation.ExceptionHandler(hospital.services.exceptions.DataException.class)
+	public ResponseEntity<StandardError> invalidData(HttpServletRequest request,
+			hospital.services.exceptions.DataException invalidData) {
+
+		String error = "Data inválida.";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		return handlerBuilder(error, status, invalidData, request);
+	}
+	
+	@org.springframework.web.bind.annotation.ExceptionHandler(hospital.services.exceptions.SaveException.class)
+	public ResponseEntity<StandardError> saveException(HttpServletRequest request,
+			hospital.services.exceptions.SaveException saveException) {
+
+		String error = "Erro ao tentar executar procedimento.";
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		return handlerBuilder(error, status, saveException, request);
+	}
 }

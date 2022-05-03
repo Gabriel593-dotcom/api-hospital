@@ -1,10 +1,16 @@
 package hospital.services.utils;
 
-public class CpfUtils {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import hospital.services.exceptions.DataException;
+
+public class Utils {
 
 	public static boolean validaCpf(String cpf) {
-		//fonte: https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
-		
+		// fonte: https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
+
 		String cpfFormated = cpf.replaceAll("[. -]", "");
 
 		if (cpfFormated.length() == 11) {
@@ -51,5 +57,16 @@ public class CpfUtils {
 		} else {
 			return false;
 		}
+	}
+
+	public static Date montaData(String data) throws ParseException {
+		//TODO arrumar esse método
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		if (data.matches(
+				"^((0[1-9]|[12]\\d)\\/(0[1-9]|1[0-2])|30\\/(0[13-9]|1[0-2])|31\\/(0[13578]|1[02])) \\/\\d{4}$")) {
+			throw new DataException("Data incorreta. Digitar no formato dd/MM/yyyy HH:mm");
+		}
+
+		return sdf.parse(data);
 	}
 }

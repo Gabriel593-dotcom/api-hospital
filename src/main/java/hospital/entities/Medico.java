@@ -1,12 +1,10 @@
 package hospital.entities;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-
-import hospital.entities.DTO.MedicoDTO;
 
 @Entity
 public class Medico extends Pessoa {
@@ -15,10 +13,10 @@ public class Medico extends Pessoa {
 	private String especialidade;
 
 	@OneToMany(mappedBy = "medico")
-	private Set<Telefone> telefones = new HashSet<>();
+	private List<Telefone> telefones = new ArrayList<>();
 
 	@OneToMany(mappedBy = "medico")
-	private Set<Consulta> consultas = new HashSet<>();
+	private List<Consulta> consultas = new ArrayList<>();
 	
 	public Medico() {
 	}
@@ -36,11 +34,11 @@ public class Medico extends Pessoa {
 		this.especialidade = especialidade;
 	}
 
-	public Set<Telefone> getTelefones() {
+	public List<Telefone> getTelefones() {
 		return this.telefones;
 	}
 	
-	public Set<Consulta> getConsultas(){
+	public List<Consulta> getConsultas(){
 		return this.consultas;
 	}
 

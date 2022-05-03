@@ -1,8 +1,8 @@
 package hospital.entities.DTO;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import hospital.entities.Medico;
 import hospital.entities.Telefone;
@@ -12,7 +12,7 @@ public class MedicoDTO implements Serializable {
 
 	private String nome;
 	private String especialidade;
-	private Set<Telefone> telefones = new HashSet<>();
+	private List<Telefone> telefones = new ArrayList<>();
 
 	public MedicoDTO() {
 	}
@@ -39,7 +39,7 @@ public class MedicoDTO implements Serializable {
 		this.especialidade = especialidade;
 	}
 
-	public Set<Telefone> getTelefones() {
+	public List<Telefone> getTelefones() {
 		return telefones;
 	}
 }
