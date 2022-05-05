@@ -55,8 +55,8 @@ public class TestDb implements CommandLineRunner {
 
 		telefoneRepository.saveAll(Arrays.asList(tel1, tel2));
 		
-		Consulta consulta1 = new Consulta(null, Utils.montaData("22/10/2022 10:05"), medico1, paciente2);
-		Consulta consulta2 = new Consulta(null, Utils.montaData("22/10/2022 12:30"), medico1, paciente1);
+		Consulta consulta1 = new Consulta(null, "22/10/2022 10:05", medico1, paciente2);
+		Consulta consulta2 = new Consulta(null,"22/10/2022 12:30", medico1, paciente1);
 
 		consultaRepository.saveAll(Arrays.asList(consulta1, consulta2));
 		

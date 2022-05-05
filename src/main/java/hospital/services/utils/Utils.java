@@ -3,10 +3,24 @@ package hospital.services.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import hospital.services.exceptions.DataException;
+import java.util.GregorianCalendar;
 
 public class Utils {
+
+	private static final String FEVEREIRO = "02";
+	private static final String ABRIL = "04";
+	private static final String JUNHO = "06";
+	private static final String SETEMBRO = "09";
+	private static final String NOVEMBRO = "11";
+	private static String mensagemErroValidacaoDaData = "";
+
+	public static String getMensagemErroValidacaoDaData() {
+		return mensagemErroValidacaoDaData;
+	}
+
+	public static void setMensagemErroValidacaoDaData(String mensagemErroValidacaoDaData) {
+		Utils.mensagemErroValidacaoDaData = mensagemErroValidacaoDaData;
+	}
 
 	public static boolean validaCpf(String cpf) {
 		// fonte: https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
@@ -59,14 +73,57 @@ public class Utils {
 		}
 	}
 
-	public static Date montaData(String data) throws ParseException {
-		//TODO arrumar esse método
+	public static boolean validaData(String data) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		if (data.matches(
-				"^((0[1-9]|[12]\\d)\\/(0[1-9]|1[0-2])|30\\/(0[13-9]|1[0-2])|31\\/(0[13578]|1[02])) \\/\\d{4}$")) {
-			throw new DataException("Data incorreta. Digitar no formato dd/MM/yyyy HH:mm");
-		}
+		boolean validacao = true;
+		GregorianCalendar anoBissexto = new GregorianCalendar();
+		String dia = data.substring(0, 2);
+		String mes = data.substring(3, 5);
+		String ano = data.substring(6, 10);
 
-		return sdf.parse(data);
+		try {
+			if (!data.matches(
+					"^([0-2][0-9]|[3][0-1])/([0][1-9]|[1][0-2])/([0-9]){4} ([0-2][0-3]|[2][0-3]):[0-5][0-9]$")) {
+				mensagemErroValidacaoDaData = "Formato de data está incorreto. Tente no padrão (dd/MM/yyyy HH:mm)";
+				validacao = false;
+			}
+
+			Date dataAtual = new Date();
+			Date dataConsulta = sdf.parse(data);
+
+			if (dataConsulta.before(dataAtual)) {
+				if (mensagemErroValidacaoDaData == "") {
+					mensagemErroValidacaoDaData = "A data informada não pode ser anterior a data atual.";
+				}
+				validacao = false;
+			}
+
+			if (dia.equals("31")
+					&& (mes.equals(ABRIL) || mes.equals(JUNHO) || mes.equals(SETEMBRO) || mes.equals(NOVEMBRO))) {
+				if (mensagemErroValidacaoDaData == "") {
+					mensagemErroValidacaoDaData = "Não tem o dia 31 no mês " + mes;
+				}
+				validacao = false;
+			}
+
+			if (dia.equals("29") && mes.equals(FEVEREIRO) && !anoBissexto.isLeapYear(Integer.parseInt(ano))) {
+				if (mensagemErroValidacaoDaData == "") {
+					mensagemErroValidacaoDaData = ano + " não é ano bissexto.";
+				}
+				validacao = false;
+			}
+
+			if ((dia.equals("30") || dia.equals("31")) && mes.equals(FEVEREIRO)) {
+				if (mensagemErroValidacaoDaData == "") {
+					mensagemErroValidacaoDaData = "no mês " + mes + " não temos os dias 30 e 31.";
+				}
+				validacao = false;
+			}
+
+			return validacao;
+
+		} catch (ParseException e) {
+			return false;
+		}
 	}
 }

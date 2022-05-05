@@ -19,6 +19,7 @@ import hospital.entities.repositories.ExameRepository;
 import hospital.entities.repositories.MedicoRepository;
 import hospital.entities.repositories.TelefoneRepository;
 import hospital.services.exceptions.CpfValidationException;
+import hospital.services.exceptions.DataException;
 import hospital.services.exceptions.ObjectNotFoundException;
 import hospital.services.exceptions.SaveException;
 import hospital.services.utils.Utils;
@@ -61,6 +62,14 @@ public class MedicoService {
 			throw new CpfValidationException("O cpf informado não é válido.");
 		}
 
+		for (Consulta c : obj.getConsultas()) {
+			if (!Utils.validaData(c.getDataConsulta())) {
+				String mensagemErroValidacao = Utils.getMensagemErroValidacaoDaData();
+				Utils.setMensagemErroValidacaoDaData("");
+				throw new DataException(mensagemErroValidacao);
+			}
+		}
+
 		try {
 			medicoRepository.save(obj);
 
@@ -80,7 +89,8 @@ public class MedicoService {
 			return new RespostaDTO(201, "Usuário criado com sucesso.");
 
 		} catch (Exception e) {
-			throw new SaveException("Houve algum erro ao tentar salvar usuário. Por favor, tente novamente mais tarde.");
+			throw new SaveException(
+					"Houve algum erro ao tentar salvar usuário. Por favor, tente novamente mais tarde.");
 		}
 	}
 
